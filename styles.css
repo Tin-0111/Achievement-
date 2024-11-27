@@ -1,0 +1,68 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f4f4f4;
+  color: #333;
+}
+
+.header {
+  background: #282c34;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+.nav {
+  margin-top: 0.5rem;
+}
+
+.nav-link {
+  color: white;
+  margin: 0 1rem;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.main {
+  padding: 1rem;
+}
+
+.section {
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.achievement-list {
+  list-style: none;
+  padding: 0;
+}
+
+.achievement-item {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background: #282c34;
+  color: white;
+}
