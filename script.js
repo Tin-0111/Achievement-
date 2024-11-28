@@ -37,3 +37,29 @@ categoryButtons.forEach(button => {
     });
   });
 });
+
+// 업적 완료 체크 저장 및 로드
+const checkboxes = document.querySelectorAll('.achievement-checkbox');
+
+// 로컬스토리지에서 상태 로드
+function loadAchievements() {
+  checkboxes.forEach(checkbox => {
+    const id = checkbox.getAttribute('data-id');
+    const completed = localStorage.getItem(id) === 'true'; // 저장된 상태 확인
+    checkbox.checked = completed;
+    checkbox.closest('.achievement-item').classList.toggle('completed', completed);
+  });
+}
+
+// 체크 상태 저장 및 스타일 적용
+checkboxes.forEach(checkbox => {
+  checkbox.addEventListener('change', () => {
+    const id = checkbox.getAttribute('data-id');
+    const completed = checkbox.checked;
+    localStorage.setItem(id, completed); // 로컬스토리지에 상태 저장
+    checkbox.closest('.achievement-item').classList.toggle('completed', completed);
+  });
+});
+
+// 페이지 로드 시 상태 적용
+loadAchievements();
