@@ -1,40 +1,54 @@
-// 탭
+// 탭 전환 기능
 document.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
-    const target = e.target.getAttribute('href').slice(1);
-    
+
+    // 모든 섹션 숨기기
     document.querySelectorAll('.section').forEach(section => {
       section.classList.add('hidden');
     });
-    
+
+    // 클릭한 탭의 섹션 표시
+    const target = link.getAttribute('href').slice(1);
     document.getElementById(target).classList.remove('hidden');
   });
 });
 
-
-// 검색 기능
+// 검색 및 필터 기능
 const searchBar = document.querySelector('.search-bar');
+const categoryButtons = document.querySelectorAll('.category-btn');
 const achievementItems = document.querySelectorAll('.achievement-item');
 
+// 검색 기능
 searchBar.addEventListener('input', () => {
   const searchText = searchBar.value.toLowerCase();
   achievementItems.forEach(item => {
     const text = item.textContent.toLowerCase();
-    item.style.display = text.includes(searchText) ? '' : 'none';
+    const isVisible = text.includes(searchText);
+    const isHiddenByFilter = item.classList.contains('hidden-filter'); // 필터 상태 확인
+    item.style.display = isVisible && !isHiddenByFilter ? '' : 'none';
   });
 });
 
 // 카테고리 필터링 기능
-const categoryButtons = document.querySelectorAll('.category-btn');
-
 categoryButtons.forEach(button => {
   button.addEventListener('click', () => {
     const selectedCategory = button.getAttribute('data-category');
-    achievementItems.forEach(item => {
-      const itemCategory = item.getAttribute('data-category');
-      item.classList.toggle('hidden', itemCategory !== selectedCategory);
-    });
+
+    // 전체 버튼이 눌리면 모든 항목 표시
+    if (selectedCategory === '0') {
+      achievementItems.forEach(item => {
+        item.classList.remove('hidden-filter');
+      });
+    } else {
+      achievementItems.forEach(item => {
+        const itemCategory = item.getAttribute('data-category');
+        item.classList.toggle('hidden-filter', itemCategory !== selectedCategory);
+      });
+    }
+
+    // 검색 조건과 함께 필터 적용
+    searchBar.dispatchEvent(new Event('input'));
   });
 });
 
@@ -45,35 +59,31 @@ const checkboxes = document.querySelectorAll('.achievement-checkbox');
 function loadAchievements() {
   checkboxes.forEach(checkbox => {
     const id = checkbox.getAttribute('data-id');
-    const completed = localStorage.getItem(id) === 'true'; // 저장된 상태 확인
+    const completed = localStorage.getItem(id) === 'true';
     checkbox.checked = completed;
     checkbox.closest('.achievement-item').classList.toggle('completed', completed);
   });
 }
 
-// 체크 상태 저장 및 스타일 적용
+// 체크 상태 저장
 checkboxes.forEach(checkbox => {
   checkbox.addEventListener('change', () => {
     const id = checkbox.getAttribute('data-id');
     const completed = checkbox.checked;
-    localStorage.setItem(id, completed); // 로컬스토리지에 상태 저장
+    localStorage.setItem(id, completed);
     checkbox.closest('.achievement-item').classList.toggle('completed', completed);
+    updateCounter();
   });
 });
 
-// 페이지 로드 시 상태 적용
-loadAchievements();
-
-// 체크박스
-const checkboxes = document.querySelectorAll('.achievement-checkbox');
-const achievementItems = document.querySelectorAll('.achievement-item');
+// 업적 카운터 업데이트
 const counter = document.getElementById('achievement-counter');
+function updateCounter() {
+  const total = checkboxes.length;
+  const completed = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+  counter.textContent = `(${completed}/${total})`;
+}
 
-// 업적 클릭 시 URL로 이동
-achievementItems.forEach(item => {
-  const textElement = item.querySelector('.achievement-text');
-  textElement.addEventListener('click', () => {
-    const url = textElement.getAttribute('data-url');
-    if (url) window.open(url, '_blank');
-  });
-});
+// 초기화
+loadAchievements();
+updateCounter();
