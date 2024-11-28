@@ -63,3 +63,17 @@ checkboxes.forEach(checkbox => {
 
 // 페이지 로드 시 상태 적용
 loadAchievements();
+
+// 체크박스
+const checkboxes = document.querySelectorAll('.achievement-checkbox');
+const achievementItems = document.querySelectorAll('.achievement-item');
+const counter = document.getElementById('achievement-counter');
+
+// 업적 클릭 시 URL로 이동
+achievementItems.forEach(item => {
+  const textElement = item.querySelector('.achievement-text');
+  textElement.addEventListener('click', () => {
+    const url = textElement.getAttribute('data-url');
+    if (url) window.open(url, '_blank');
+  });
+});
