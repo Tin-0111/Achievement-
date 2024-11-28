@@ -74,6 +74,16 @@ body {
   color: #0f5132;
 }
 
+/* 숨겨진 상태 */
+.hidden {
+  display: none;
+}
+
+/* 필터로 숨겨진 상태 */
+.hidden-filter {
+  display: none;
+}
+
 .counter {
   font-size: 1rem;
   color: #6c757d;
@@ -91,10 +101,6 @@ body {
   padding: 1rem;
   margin-bottom: 0.5rem;
   border-radius: 5px;
-}
-
-.hidden {
-  display: none;
 }
 
 .footer {
