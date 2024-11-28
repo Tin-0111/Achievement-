@@ -31,12 +31,10 @@ searchBar.addEventListener('input', () => {
   });
 });
 
-// 카테고리 필터링 기능
 categoryButtons.forEach(button => {
   button.addEventListener('click', () => {
     const selectedCategory = button.getAttribute('data-category');
 
-    // 전체 버튼이 눌리면 모든 항목 표시
     if (selectedCategory === '0') {
       achievementItems.forEach(item => {
         item.classList.remove('hidden-filter');
@@ -48,16 +46,13 @@ categoryButtons.forEach(button => {
       });
     }
 
-    // 검색 조건과 함께 필터 적용
     searchBar.dispatchEvent(new Event('input'));
   });
 });
 
-// 업적 완료 체크 저장 및 로드
 const checkboxes = document.querySelectorAll('.achievement-checkbox');
 const textInputs = document.querySelectorAll('.achievement-input');
 
-// 로컬스토리지에서 상태 로드
 function loadAchievements() {
   checkboxes.forEach(checkbox => {
     const id = checkbox.getAttribute('data-id');
@@ -75,7 +70,6 @@ function loadAchievements() {
   });
 }
 
-// 체크 상태 저장
 checkboxes.forEach(checkbox => {
   checkbox.addEventListener('change', () => {
     const id = checkbox.getAttribute('data-id');
@@ -86,19 +80,15 @@ checkboxes.forEach(checkbox => {
   });
 });
 
-// 텍스트 저장
 textInputs.forEach(input => {
   input.addEventListener('input', () => {
     const id = input.getAttribute('data-id');
     const text = input.value;
     localStorage.setItem(`${id}-text`, text);
-
-    // 검색 조건에 바로 반영
     searchBar.dispatchEvent(new Event('input'));
   });
 });
 
-// 업적 카운터 업데이트
 const counter = document.getElementById('achievement-counter');
 function updateCounter() {
   const total = checkboxes.length;
@@ -106,6 +96,5 @@ function updateCounter() {
   counter.textContent = `(${completed}/${total})`;
 }
 
-// 초기화
 loadAchievements();
 updateCounter();
