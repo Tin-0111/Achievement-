@@ -49,7 +49,7 @@ body {
 
 .category-btn {
   padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
+  margin: 0.5rem 0.5rem 0 0;
   border: none;
   border-radius: 5px;
   background: #007bff;
@@ -59,6 +59,12 @@ body {
 
 .category-btn:hover {
   background: #0056b3;
+}
+
+/* 완료된 업적 스타일 */
+.achievement-item.completed label {
+  text-decoration: line-through;
+  color: #888;
 }
 
 .achievement-list {
