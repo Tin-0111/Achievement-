@@ -67,6 +67,19 @@ body {
   color: #888;
 }
 
+/* 체크된 업적의 색상 변경 */
+.achievement-item.completed {
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+  color: #0f5132;
+}
+
+.counter {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-top: 0.5rem;
+}
+
 .achievement-list {
   list-style: none;
   padding: 0;
