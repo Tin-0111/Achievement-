@@ -23,8 +23,9 @@ const achievementItems = document.querySelectorAll('.achievement-item');
 searchBar.addEventListener('input', () => {
   const searchText = searchBar.value.toLowerCase();
   achievementItems.forEach(item => {
-    const text = item.textContent.toLowerCase();
-    const isVisible = text.includes(searchText);
+    const textInput = item.querySelector('.achievement-input'); // 텍스트 입력 필드
+    const inputText = textInput.value.toLowerCase(); // 입력 필드 내용
+    const isVisible = inputText.includes(searchText); // 검색어와 일치 여부
     const isHiddenByFilter = item.classList.contains('hidden-filter'); // 필터 상태 확인
     item.style.display = isVisible && !isHiddenByFilter ? '' : 'none';
   });
@@ -91,6 +92,9 @@ textInputs.forEach(input => {
     const id = input.getAttribute('data-id');
     const text = input.value;
     localStorage.setItem(`${id}-text`, text);
+
+    // 검색 조건에 바로 반영
+    searchBar.dispatchEvent(new Event('input'));
   });
 });
 
