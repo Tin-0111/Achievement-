@@ -53,30 +53,34 @@ categoryButtons.forEach(button => {
 const checkboxes = document.querySelectorAll('.achievement-checkbox');
 const textInputs = document.querySelectorAll('.achievement-input');
 
+// 로컬스토리지에서 상태 로드
 function loadAchievements() {
   checkboxes.forEach(checkbox => {
     const id = checkbox.getAttribute('data-id');
-    const completed = localStorage.getItem(`${id}-completed`) === 'true';
-    checkbox.checked = completed;
-    checkbox.closest('.achievement-item').classList.toggle('completed', completed);
+    const completed = localStorage.getItem(`${id}-completed`) === 'true'; // 저장된 값 확인
+    checkbox.checked = completed; // 저장된 값에 따라 체크 상태 설정
+    checkbox.closest('.achievement-item').classList.toggle('completed', completed); // 스타일 업데이트
   });
 
   textInputs.forEach(input => {
     const id = input.getAttribute('data-id');
     const savedText = localStorage.getItem(`${id}-text`);
-    if (savedText) {
+    if (savedText !== null) { // 저장된 값이 있을 때만 설정
       input.value = savedText;
     }
   });
+
+  updateCounter(); // 상태에 따라 카운터 업데이트
 }
 
+// 체크 상태 저장
 checkboxes.forEach(checkbox => {
   checkbox.addEventListener('change', () => {
     const id = checkbox.getAttribute('data-id');
     const completed = checkbox.checked;
-    localStorage.setItem(`${id}-completed`, completed);
-    checkbox.closest('.achievement-item').classList.toggle('completed', completed);
-    updateCounter();
+    localStorage.setItem(`${id}-completed`, completed); // 로컬스토리지에 상태 저장
+    checkbox.closest('.achievement-item').classList.toggle('completed', completed); // 스타일 적용
+    updateCounter(); // 카운터 업데이트
   });
 });
 
